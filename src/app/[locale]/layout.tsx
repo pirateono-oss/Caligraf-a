@@ -4,6 +4,7 @@ import '../globals.css';
 import { isValidLocale, getDictionary } from '@/lib/i18n';
 import type { Locale } from '@/lib/types';
 import { notFound } from 'next/navigation';
+import { SiteNetworkFooter } from '@/components/site-network-footer';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -19,5 +20,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isValidLocale(locale)) notFound();
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <SiteNetworkFooter locale={locale as Locale} />
+    </>
+  );
 }
